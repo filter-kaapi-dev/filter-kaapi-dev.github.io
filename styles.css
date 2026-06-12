@@ -1,0 +1,164 @@
+/* =====================================================================
+   How to Rate Your Neighborhood — stylesheet
+   ---------------------------------------------------------------------
+   EDIT EVERYTHING FROM THE :root BLOCK BELOW.
+   Change a value once here and it updates across the whole page.
+   ===================================================================== */
+
+:root {
+  /* ---- COLORS ---- */
+  --color-text:        #37352f;   /* main body text                     */
+  --color-bg:          #ffffff;   /* page background                    */
+  --color-accent:      #3b2f8f;   /* links, title underline (QR purple) */
+  --color-muted:       #787774;   /* faint text                         */
+  --color-callout-bg:  #f1f1ef;   /* grey callout box background        */
+  --color-toggle-line: #ebebea;   /* divider line under each toggle     */
+
+  /* ---- FONTS ---- */
+  /* Notion's default UI font stack (system fonts — no external load).  */
+  --font-body: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Helvetica, "Apple Color Emoji", Arial, sans-serif;
+  --font-title: var(--font-body);
+
+  /* ---- SIZES ---- */
+  --font-size-body:  16px;        /* base text size                     */
+  --font-size-title: 40px;        /* big page title size                */
+  --line-height:     1.6;         /* spacing between lines of text      */
+  --content-width:   720px;       /* max width of the reading column    */
+  --page-padding:    24px;        /* gap from the screen edges          */
+}
+
+/* ---------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------- */
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height);
+}
+
+/* The centered reading column (the "layout"). */
+.page {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 64px var(--page-padding) 120px;
+}
+
+/* ---------------------------------------------------------------------
+   Title
+   --------------------------------------------------------------------- */
+.page-title {
+  font-family: var(--font-title);
+  font-size: var(--font-size-title);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 28px;
+  letter-spacing: -0.01em;
+}
+
+/* ---------------------------------------------------------------------
+   Paragraphs & lists
+   --------------------------------------------------------------------- */
+p { margin: 0.5em 0; }
+
+ol {
+  margin: 0.5em 0;
+  padding-left: 1.6em;
+}
+ol li { margin: 0.25em 0; }
+
+a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+a:hover { opacity: 0.8; }
+
+/* ---------------------------------------------------------------------
+   Callout box (the grey 💡 boxes)
+   --------------------------------------------------------------------- */
+.callout {
+  display: flex;
+  gap: 12px;
+  background: var(--color-callout-bg);
+  border-radius: 6px;
+  padding: 16px 16px 16px 14px;
+  margin: 14px 0;
+}
+.callout-icon { font-size: 18px; line-height: 1.6; flex: 0 0 auto; }
+.callout-body p { margin: 0; }
+.callout-body p + p { margin-top: 0.5em; }
+
+/* ---------------------------------------------------------------------
+   Toggles (the expand/collapse arrows) — pure HTML <details>, no JS
+   --------------------------------------------------------------------- */
+details {
+  border-bottom: 1px solid var(--color-toggle-line);
+}
+
+summary {
+  list-style: none;            /* hide the default browser triangle */
+  cursor: pointer;
+  font-weight: 600;
+  padding: 12px 4px 12px 26px; /* left room for our custom arrow */
+  position: relative;
+  user-select: none;
+}
+summary::-webkit-details-marker { display: none; } /* hide marker in Safari */
+
+/* Our own arrow that rotates when the toggle opens. */
+summary::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-left: 6px solid currentColor;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  transform: translateY(-50%);
+  transition: transform 0.15s ease;
+}
+details[open] > summary::before {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+summary:hover { background: var(--color-callout-bg); border-radius: 4px; }
+
+.summary-emoji { margin-right: 2px; }
+
+/* Indent the content sitting inside an open toggle. */
+.toggle-content {
+  padding: 2px 4px 12px 26px;
+}
+
+/* Nested toggles (inside "How does it work?") sit flush, no double border. */
+.toggle-content > details { border-bottom: 1px solid var(--color-toggle-line); }
+.toggle-content > details:last-child { border-bottom: none; }
+
+/* ---------------------------------------------------------------------
+   QR code image
+   --------------------------------------------------------------------- */
+.qr {
+  display: block;
+  width: 240px;
+  max-width: 100%;
+  height: auto;
+  margin: 12px 0;
+}
+
+/* ---------------------------------------------------------------------
+   Small screens
+   --------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  :root { --font-size-title: 30px; }
+  .page { padding: 40px 18px 80px; }
+}
